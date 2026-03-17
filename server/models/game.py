@@ -3,6 +3,8 @@ from .base import BaseModel
 from sqlalchemy.orm import validates, relationship
 
 class Game(BaseModel):
+    """SQLAlchemy model representing a game available for crowdfunding."""
+
     __tablename__ = 'games'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -19,19 +21,23 @@ class Game(BaseModel):
     publisher = relationship("Publisher", back_populates="games")
     
     @validates('title')
-    def validate_name(self, key, name):
+    def validate_name(self, key: str, name: str) -> str:
+        """Validate the game title meets minimum length requirements."""
         return self.validate_string_length('Game title', name, min_length=2)
     
     @validates('description')
-    def validate_description(self, key, description):
+    def validate_description(self, key: str, description: str | None) -> str | None:
+        """Validate the game description meets minimum length requirements."""
         if description is not None:
             return self.validate_string_length('Description', description, min_length=10, allow_none=True)
         return description
     
-    def __repr__(self):
+    def __repr__(self) -> str:
+        """Return a developer-friendly string representation of the game."""
         return f'<Game {self.title}, ID: {self.id}>'
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
+        """Serialize the game instance to a dictionary suitable for JSON responses."""
         return {
             'id': self.id,
             'title': self.title,
