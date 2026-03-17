@@ -2,15 +2,61 @@
 import Layout from '../layouts/Layout.astro';
 import GameList from '../components/GameList.svelte';
 import "../styles/global.css";
+
+const stats = [
+  { value: "50+",    label: "Games Listed"  },
+  { value: "1,200+", label: "Backers"        },
+  { value: "$240K+", label: "Funds Raised"  },
+];
 ---
 
 <Layout title="Tailspin Toys - Crowdfunding your new favorite game!">
-  <div class="py-8">
-    <div class="max-w-3xl mb-10">
-      <h1 class="text-4xl font-bold mb-4 text-slate-100">Welcome to Tailspin Toys</h1>
-      <p class="text-xl text-slate-300">Find your next game! And maybe even back one! Explore our collection!</p>
+  <!-- Hero Section -->
+  <div class="py-12 mb-4">
+    <!-- Eyebrow badge -->
+    <div class="inline-flex items-center gap-2 bg-blue-600/15 border border-blue-500/30 text-blue-400 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-6">
+      <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+      Now Live – New Campaigns Available
     </div>
-    
+
+    <h1 class="text-5xl sm:text-6xl font-extrabold mb-5 leading-tight">
+      <span class="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Welcome to</span><br>
+      <span class="bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">Tailspin Toys</span>
+    </h1>
+    <p class="text-lg text-slate-400 max-w-xl mb-8 leading-relaxed">
+      Discover, back, and celebrate the best developer-themed games.
+      Fund the next cult classic before it hits the shelves.
+    </p>
+
+    <!-- CTA buttons -->
+    <div class="flex flex-wrap gap-4 mb-12">
+      <a href="#games" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-blue-600/25 hover:shadow-blue-500/40 transition-all duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+        Explore Games
+      </a>
+      <a href="/about" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-600/50 text-slate-200 font-semibold px-6 py-3 rounded-xl transition-all duration-200">
+        Learn More
+      </a>
+    </div>
+
+    <!-- Stats row -->
+    <div class="flex flex-wrap gap-8">
+      {stats.map(stat => (
+        <div class="text-center">
+          <p class="text-2xl font-bold text-white">{stat.value}</p>
+          <p class="text-xs text-slate-500 mt-0.5 uppercase tracking-wider">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent mb-10"></div>
+
+  <!-- Games Section -->
+  <div id="games">
     <GameList client:only="svelte" />
   </div>
 </Layout>
